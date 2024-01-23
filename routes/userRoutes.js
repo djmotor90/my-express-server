@@ -9,7 +9,7 @@ const router = express.Router();
 
 
 // Route to retrieve all users (authentication required)
-router.get('/', verifyToken, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     // Fetch all user data from the database
     const users = await UserModel.find();
@@ -39,26 +39,22 @@ router.get('/:userId', async (req, res) => {
   }
 });
 
-// Route to update user information (with token verification)
-router.put('/:userId', verifyToken, async (req, res) => {
+// Route to update user information (with or without token verification)
+router.put('/:userId', async (req, res) => {
   try {
     const userId = req.params.userId;
     const updatedUserData = req.body; // Assuming the updated data is sent in the request body
 
-    // Debugging: Print req.user object and updatedUserData
-    console.log('req.user:', req.user);
+    // Debugging: Print updatedUserData
     console.log('updatedUserData:', updatedUserData);
 
-    // Check if the authenticated user matches the user ID in the request
-    if (userId !== req.user.userId) {
+    // Check if there is a token and if the user ID in the request matches the ID of the user being updated
+    if (req.user && userId !== req.user.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
     }
 
     // Debugging: Print the user ID being used in the update query
     console.log('Updating user with ID:', userId);
-
-    // Debugging: Print the data that will be pushed to the update operation
-    console.log('Data to push:', updatedUserData);
 
     // Find the user by ID and update their information
     const updatedUser = await UserModel.findByIdAndUpdate(userId, updatedUserData, {
