@@ -8,7 +8,7 @@ import dotenv from 'dotenv';
 import userRoutes from './routes/userRoutes.js';
 import apiKeyRoutes from './routes/apiKeyRoutes.js';
 import cors from 'cors';
-
+import cookieParser from 'cookie-parser';
 
 
 dotenv.config();
@@ -20,7 +20,7 @@ app.use(cors({
     origin: 'http://localhost:3000', // Adjust to your front-end URL
     credentials: true
   }));
-
+  app.use(cookieParser());
 
 app.use(express.json());
 

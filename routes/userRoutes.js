@@ -39,42 +39,31 @@ router.get('/:userId', async (req, res) => {
   }
 });
 
-// Route to update user information (with or without token verification)
-router.put('/:userId', async (req, res) => {
+// Route to update user information with token verification
+router.put('/:userId', verifyToken, async (req, res) => {
   try {
     const userId = req.params.userId;
-    const updatedUserData = req.body; // Assuming the updated data is sent in the request body
+    const updatedUserData = req.body;
 
-    // Debugging: Print updatedUserData
-    console.log('updatedUserData:', updatedUserData);
-
-    // Check if there is a token and if the user ID in the request matches the ID of the user being updated
-    if (req.user && userId !== req.user.userId) {
+    // Ensure the user ID from the token matches the user ID in the request
+    if (req.user.userId !== userId) {
       return res.status(401).json({ error: 'Unauthorized' });
     }
 
-    // Debugging: Print the user ID being used in the update query
-    console.log('Updating user with ID:', userId);
-
-    // Find the user by ID and update their information
+    // Update user information
     const updatedUser = await UserModel.findByIdAndUpdate(userId, updatedUserData, {
-      new: true, // Return the updated document
-      runValidators: true, // Run model validation on the updated data
+      new: true,
+      runValidators: true,
     });
 
     if (!updatedUser) {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    // Debugging: Print the updated user data
-    console.log('Updated User Data:', updatedUser);
-    console.log('Received Request Body:', updatedUserData);
-
-    // Return the updated user data in the response
     res.json(updatedUser);
   } catch (error) {
     console.error('Error updating user:', error);
-    res.status(500).json({ error: 'Could not update user', details: error.message });
+    res.status(500).json({ error: 'Could not update user' });
   }
 });
 

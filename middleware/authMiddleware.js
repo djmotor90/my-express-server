@@ -5,8 +5,8 @@ import jwt from 'jsonwebtoken';
 // Middleware to verify JWT token
 export const verifyToken = (req, res, next) => {
   const tokenHeader = req.header('Authorization');
-  const tokenCookie = req.cookies.token; // Parse the token from the cookie
-
+  const tokenCookie = req.cookies ? req.cookies.token : null;// Parse the token from the cookie
+  console.log('Token Header:', tokenHeader, 'Token Cookie:', tokenCookie);
   // Check if the token is present in the header or cookie
   if (!tokenHeader && !tokenCookie) {
     return res.status(401).json({ error: 'Access denied. Token is missing.' });
