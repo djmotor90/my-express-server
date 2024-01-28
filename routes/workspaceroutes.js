@@ -107,6 +107,24 @@ router.post('/addUser/:workspaceId', verifyToken, async (req, res) => {
   }
 });
 
+
+// DELETE route to delete a workspace
+router.delete('/:workspaceId', async (req, res) => {
+  try {
+    const { workspaceId } = req.params;
+    const deletedWorkspace = await Workspace.findByIdAndDelete(workspaceId);
+    if (!deletedWorkspace) {
+      return res.status(404).json({ error: 'Workspace not found' });
+    }
+    res.status(200).json({ message: 'Workspace deleted successfully' });
+  } catch (error) {
+    console.error("Error deleting workspace:", error);
+    res.status(500).json({ error: 'Failed to delete workspace' });
+  }
+});
+
+
+
 // Other routes for workspace operations (e.g., removing users, updating settings, etc.)
 
 export default router;
