@@ -9,6 +9,7 @@ import userRoutes from './routes/userRoutes.js';
 import apiKeyRoutes from './routes/apiKeyRoutes.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import workspaceroute from './routes/workspaceroutes.js';
 
 
 dotenv.config();
@@ -52,6 +53,7 @@ app.post('/api/logout', (req, res) => {
 app.use('/api/users', userRoutes);
 app.use('/api/keys', apiKeyRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/workspace', workspaceroute);
 
 
 const PORT = process.env.PORT || 3001;

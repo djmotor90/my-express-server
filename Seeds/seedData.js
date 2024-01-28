@@ -1,6 +1,6 @@
 require('dotenv').config(); // Load environment variables from .env file
 const mongoose = require('mongoose');
-const User = require('./models/userModel'); // Import your user model
+const User = require('../models/userModel'); // Import your user model
 
 // Define your seed data
 const usersData = [

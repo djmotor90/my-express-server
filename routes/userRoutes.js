@@ -39,6 +39,21 @@ router.get('/:userId', async (req, res) => {
   }
 });
 
+// Route to retrieve user by email (does not require authentication)
+router.get('/email/:email', async (req, res) => {
+  try {
+    const userEmail = req.params.email;
+    const user = await UserModel.findOne({ email: userEmail });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.json(user);
+  } catch (error) {
+    console.error('Error retrieving user by email:', error);
+    res.status(500).json({ error: 'Could not retrieve user by email' });
+  }
+});
+
 // Route to update user information with token verification
 router.put('/:userId', verifyToken, async (req, res) => {
   try {
