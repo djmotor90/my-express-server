@@ -37,6 +37,24 @@ router.get('/:ownerId', async (req, res) => {
 });
 
 
+// GET route to retrieve workspaces by userId
+router.get('/:userId', async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    // Retrieve workspaces where the userId matches the provided ID
+    const workspaces = await Workspace.find({ users: userId });
+    if (!workspaces || workspaces.length === 0) {
+      return res.status(404).json({ error: 'No workspaces found for the provided user ID' });
+    }
+
+    res.json(workspaces);
+  } catch (error) {
+    console.error('Error retrieving workspaces:', error);
+    res.status(500).json({ error: 'Could not retrieve workspaces' });
+  }
+});
+
 // Create a new workspace
 router.post('/create', async (req, res) => {
   try {
