@@ -16,7 +16,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
+            cd my-express-server &&
             echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" > .env &&
             echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env &&
-            npm install --only=prod &&
+            npm install &&
             pm2 reload my-express-server || pm2 start server.js --name my-express-server --watch
