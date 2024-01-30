@@ -4,6 +4,7 @@ import UserModel from '../models/userModel.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
+
 // Function to handle user signup
 export async function signup(req, res) {
   try {
