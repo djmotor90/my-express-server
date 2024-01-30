@@ -1,4 +1,3 @@
-// workspaceModel.js
 import mongoose from 'mongoose';
 
 const workspaceSchema = new mongoose.Schema({
@@ -19,9 +18,12 @@ const workspaceSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  listId: {
+    type: String, // Change the type to String
+    required: true,
+  },
 });
 
 const Workspace = mongoose.model('Workspace', workspaceSchema);
 
 export default Workspace;
-
