@@ -10,6 +10,7 @@ import apiKeyRoutes from './routes/apiKeyRoutes.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import workspaceroute from './routes/workspaceroutes.js';
+import contactus from './routes/contactUs.js'
 
 
 dotenv.config();
@@ -54,6 +55,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/keys', apiKeyRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/workspace', workspaceroute);
+app.use('/api/contact', contactus)
 
 
 const PORT = process.env.PORT || 3001;
