@@ -13,15 +13,16 @@ import workspaceroute from './routes/workspaceroutes.js';
 import contactus from './routes/contactUs.js'
 
 
+
 dotenv.config();
 
 const app = express();
 
 // CORS configuration
 app.use(cors({
-    origin: 'http://localhost:3000', // Adjust to your front-end URL
-    credentials: true
-  }));
+  origin: process.env.CORS_ORIGIN, // Use the environment variable
+  credentials: true
+}));
   app.use(cookieParser());
 
 app.use(express.json());

@@ -20,5 +20,6 @@ jobs:
             git pull &&
             echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" > .env &&
             echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env &&
+            echo "CORS_ORIGIN=${{ secrets.CORS_ORIGIN }}" >> .env &&
             npm install &&
             pm2 reload my-express-server || pm2 start server.js --name my-express-server --watch
