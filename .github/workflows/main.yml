@@ -17,6 +17,7 @@ jobs:
           port: 22
           script: |
             cd my-express-server &&
+            git pull &&
             echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" > .env &&
             echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env &&
             npm install &&
