@@ -55,6 +55,25 @@ router.get('/:userId', async (req, res) => {
   }
 });
 
+// GET route to retrieve workspace details by workspace ID
+router.get('/space/:workspaceId', async (req, res) => {
+  try {
+    const { workspaceId } = req.params;
+
+    // Retrieve the workspace by ID
+    const workspace = await Workspace.findById(workspaceId);
+    if (!workspace) {
+      return res.status(404).json({ error: 'Workspace not found' });
+    }
+
+    res.json(workspace);
+  } catch (error) {
+    console.error('Error retrieving workspace details:', error);
+    res.status(500).json({ error: 'Could not retrieve workspace details' });
+  }
+});
+
+
 // Create a new workspace
 router.post('/create', async (req, res) => {
   try {
