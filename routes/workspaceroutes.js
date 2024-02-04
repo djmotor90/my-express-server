@@ -24,7 +24,13 @@ router.get('/:ownerId', async (req, res) => {
     const { ownerId } = req.params;
 
     // Retrieve workspaces where the ownerId matches the provided ID
-    const workspaces = await Workspace.find({ owner: ownerId });
+    //updated the routing to fetch the users too
+    const workspaces = await Workspace.find({
+  $or: [
+    { users: ownerId },
+    { owner: ownerId }
+  ]
+});
     if (!workspaces || workspaces.length === 0) {
       return res.status(404).json({ error: 'No workspaces found for the provided owner ID' });
     }
