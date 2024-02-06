@@ -22,6 +22,10 @@ const workspaceSchema = new mongoose.Schema({
     type: String, // Change the type to String
     required: true,
   },
+  requestLink: {
+    type: String, // Change the type to String
+    required: false,
+  },
 });
 
 const Workspace = mongoose.model('Workspace', workspaceSchema);

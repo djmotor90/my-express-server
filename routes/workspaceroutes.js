@@ -83,9 +83,9 @@ router.get('/space/:workspaceId', async (req, res) => {
 // Create a new workspace
 router.post('/create', async (req, res) => {
   try {
-    const { name, owner, users, api, listId } = req.body;
+    const { name, owner, users, api, listId, requestLink } = req.body;
     console.log("Received payload:", req.body);  // Log the received payload
-    const workspace = new Workspace({ name, owner, users, api, listId });
+    const workspace = new Workspace({ name, owner, users, api, listId, requestLink });
     await workspace.save();
     res.status(201).json(workspace);
   } catch (error) {
@@ -98,12 +98,12 @@ router.post('/create', async (req, res) => {
 router.put('/update/:workspaceId', async (req, res) => {
   try {
     const { workspaceId } = req.params; // Get the workspace ID from the URL parameters
-    const { name, owner, users, api, listId } = req.body; // Destructure the updated fields from the request body
+    const { name, owner, users, api, listId, requestLink } = req.body; // Destructure the updated fields from the request body
 
     console.log("Received update payload:", req.body);  // Log the received payload
 
     // Find the workspace by ID and update it
-    const updatedWorkspace = await Workspace.findByIdAndUpdate(workspaceId, { name, owner, users, api, listId }, { new: true });
+    const updatedWorkspace = await Workspace.findByIdAndUpdate(workspaceId, { name, owner, users, api, listId, requestLink }, { new: true });
 
     if (!updatedWorkspace) {
       return res.status(404).json({ error: 'Workspace not found' });
